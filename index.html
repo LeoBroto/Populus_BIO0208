@@ -3,41 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Populus Weby</title>
+    <title>Populus_BIO208</title>
     <!-- Carrega a biblioteca do CheerpJ -->
     <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js"></script>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background-color: #222;
-            color: #fff;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            text-align: center;
         }
         #status {
-            margin-bottom: 15px;
             font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #444;
+        }
+        #app-container {
+            width: 1024px;
+            height: 768px;
+            margin: 0 auto;
+            border: 1px solid #555;
+            background-color: #000;
         }
     </style>
 </head>
 <body>
-    <div id="status">⏳ Carregando o Java e o Populus... Aguarde alguns segundos.</div>
+    <div id="status">⏳ Inicializando o ambiente Java... Aguarde.</div>
+    <div id="app-container"></div>
 
     <script>
         (async () => {
-            // Inicializa o motor do Java no navegador
-            await cheerpjInit();
-            // Cria a janela onde o Populus vai aparecer
-            cheerpjCreateDisplay(1024, 768);
-            // Executa o arquivo exato que você enviou
-            await cheerpjRunJar("/app/PopulusAll_Jan_2018.jar");
-            // Esconde a mensagem de carregamento quando o programa abrir
-            document.getElementById('status').style.display = 'none';
+            const statusEl = document.getElementById('status');
+            try {
+                // 1. Inicializa o CheerpJ
+                await cheerpjInit();
+                
+                // 2. Cria a área gráfica dentro do container da página
+                const container = document.getElementById('app-container');
+                cheerpjCreateDisplay(1024, 768, container);
+                
+                statusEl.innerText = "⏳ Carregando o PopulusAll_Jan_2018.jar...";
+
+                // 3. Executa o arquivo JAR (respeitando maiúsculas e minúsculas)
+                const exitCode = await cheerpjRunJar("/app/PopulusAll_Jan_2018.jar");
+                
+                // Esconde a mensagem ao concluir
+                statusEl.style.display = 'none';
+            } catch (err) {
+                // Se der qualquer erro, exibe a mensagem na tela
+                statusEl.style.color = '#ff6b6b';
+                statusEl.innerText = "❌ Erro ao carregar: " + err.message;
+                console.error(err);
+            }
         })();
     </script>
 </body>
