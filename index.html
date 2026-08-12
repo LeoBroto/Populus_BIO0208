@@ -21,6 +21,8 @@
             border-radius: 8px;
             display: inline-block;
             border: 1px solid #444;
+            max-width: 90%;
+            line-height: 1.5;
         }
         #app-container {
             width: 100%;
@@ -31,47 +33,42 @@
             background-color: #000;
         }
     </style>
-
-    <!-- Carrega a biblioteca do CheerpJ -->
-    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js"></script>
 </head>
 <body>
-    <div id="status">⏳ Baixando componentes do Java... Aguarde (V2.0).</div>
+    <div id="status">⏳ Conectando aos servidores do Java... Aguarde.</div>
     <div id="app-container"></div>
 
     <script>
-        async function iniciarPopulus() {
+        async function rodarPopulus() {
             const statusEl = document.getElementById('status');
             try {
-                statusEl.innerText = "⏳ Inicializando ambiente Java...";
-                
-                // 1. Inicializa o CheerpJ
+                statusEl.innerText = "⏳ Inicializando Java no navegador...";
                 await cheerpjInit();
                 
-                // 2. Define o container onde a tela do programa vai aparecer
                 const container = document.getElementById('app-container');
                 cheerpjCreateDisplay(1024, 768, container);
                 
-                statusEl.innerText = "⏳ Abrindo o Populus... (pode levar até 30s na primeira vez)";
-
-                // 3. Executa o arquivo .jar enviado ao GitHub
+                statusEl.innerText = "⏳ Carregando o Populus (PopulusAll_Jan_2018.jar)...";
                 await cheerpjRunJar("/app/PopulusAll_Jan_2018.jar");
                 
                 statusEl.style.display = 'none';
             } catch (err) {
                 statusEl.style.color = '#ff6b6b';
-                statusEl.innerText = "❌ Erro ao carregar: " + err.message;
+                statusEl.innerText = "❌ Erro ao executar o Populus: " + err.message;
             }
         }
 
-        // Garante que a biblioteca foi totalmente baixada antes de executar
-        window.addEventListener('load', function() {
-            if (typeof cheerpjInit !== "undefined") {
-                iniciarPopulus();
-            } else {
-                document.getElementById('status').innerText = "❌ Falha ao baixar a biblioteca do CheerpJ. Verifique a conexão.";
-            }
-        });
+        function falhaDownload() {
+            const statusEl = document.getElementById('status');
+            statusEl.style.color = '#ff6b6b';
+            statusEl.innerHTML = "❌ O navegador bloqueou o carregamento da biblioteca Java.<br><br>" +
+                "<b>Como resolver no tablet:</b><br>" +
+                "1. Desative a 'Proteção contra rastreamento' ou o 'Bloqueador de Anúncios/Brave Shield' neste site.<br>" +
+                "2. Se estiver no Edge ou Chrome, verifique se a extensão/configuração de segurança não bloqueou conexões externas.";
+        }
     </script>
+
+    <!-- O evento onload garante que o código só roda após o arquivo carregar 100% -->
+    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js" onload="rodarPopulus()" onerror="falhaDownload()"></script>
 </body>
 </html>
