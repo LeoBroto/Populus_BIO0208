@@ -1,2 +1,2 @@
 # Populus_BIO0208
-An atempt to run populous on android devices
+An attempt to run Populous on Android devices for educational purposes.
