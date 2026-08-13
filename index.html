@@ -54,7 +54,7 @@
                 statusEl.style.display = 'none';
             } catch (err) {
                 statusEl.style.color = '#ff6b6b';
-                statusEl.innerText = "❌ Erro ao executar o Populus (V0.3): " + err.message;
+                statusEl.innerText = "❌ Erro ao executar o Populus (V0.4): " + err.message;
             }
         }
 
@@ -69,6 +69,6 @@
     </script>
 
     <!-- O evento onload garante que o código só roda após o arquivo carregar 100% -->
-    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js" onload="rodarPopulus()" onerror="falhaDownload()"></script>
+    <script src="https://cjrtnc.leaningtech.com/3.1/cj3loader.js" onload="rodarPopulus()" onerror="falhaDownload()"></script>
 </body>
 </html>
