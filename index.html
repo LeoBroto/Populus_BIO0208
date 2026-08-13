@@ -43,7 +43,11 @@
             const statusEl = document.getElementById('status');
             try {
                 statusEl.innerText = "⏳ Inicializando Java no navegador...";
-                await cheerpjInit();
+                
+                // CORREÇÃO: Apontando a raiz do documento para a pasta do repositório
+                await cheerpjInit({
+                    overrideDocumentBase: "https://leobroto.github.io/Populus_BIO0208/"
+                });
                 
                 const container = document.getElementById('app-container');
                 cheerpjCreateDisplay(1024, 768, container);
