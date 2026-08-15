@@ -46,7 +46,8 @@
                 
                 // CORREÇÃO: Apontando a raiz do documento para a pasta do repositório
                 await cheerpjInit({
-                    overrideDocumentBase: "https://leobroto.github.io/Populus_BIO0208/"
+                      overrideDocumentBase: "https://leobroto.github.io/Populus_BIO0208/",
+                      javaProperties: ["user.language=", "user.country="]
                 });
                 
                 const container = document.getElementById('app-container');
