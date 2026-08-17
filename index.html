@@ -43,23 +43,22 @@
             const statusEl = document.getElementById('status');
             try {
                 statusEl.innerText = "⏳ Inicializando Java no navegador...";
-                
-                // CORREÇÃO: Apontando a raiz do documento para a pasta do repositório
+
                 await cheerpjInit({
                       overrideDocumentBase: "https://leobroto.github.io/Populus_BIO0208/",
                       javaProperties: ["user.language=", "user.country="]
                 });
-                
+
                 const container = document.getElementById('app-container');
                 cheerpjCreateDisplay(1024, 768, container);
-                
+
                 statusEl.innerText = "⏳ Carregando PopulusAll_Jan_2018_FIXED_V3.jar. Uso exclusivo na Disciplina BIO0208";
                 await cheerpjRunJar("/app/Populus_BIO0208/PopulusAll_Jan_2018_FIXED_V3.jar");
-                
+
                 statusEl.style.display = 'none';
             } catch (err) {
                 statusEl.style.color = '#ff6b6b';
-                statusEl.innerText = "❌ Erro ao executar o Populus (V0.6): " + err.message;
+                statusEl.innerText = "❌ Erro ao executar o Populus (V0.7): " + err.message;
             }
         }
 
@@ -73,7 +72,7 @@
         }
     </script>
 
-    <!-- O evento onload garante que o código só roda após o arquivo carregar 100% -->
-    <script src="https://cjrtnc.leaningtech.com/3.1/cj3loader.js" onload="rodarPopulus()" onerror="falhaDownload()"></script>
+    <!-- Trocado de 3.1 para 4.3: é a versão que introduziu suporte a teclado virtual em touch -->
+    <script src="https://cjrtnc.leaningtech.com/4.3/loader.js" onload="rodarPopulus()" onerror="falhaDownload()"></script>
 </body>
 </html>
